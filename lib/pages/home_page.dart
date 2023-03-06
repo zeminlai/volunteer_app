@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_components.dart';
+import '../utils/home_components.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   //UPCOMING SESSIONS
                   padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                  child: Container(
+                  child: SizedBox(
                     width: 400,
                     height: 120,
                     child: SingleChildScrollView(

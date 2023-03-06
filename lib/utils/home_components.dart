@@ -153,7 +153,7 @@ class ResourcesCard extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 10,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -165,14 +165,14 @@ class ResourcesCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
             child: Text(
               title,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 3, 0, 0),
             child: Text(
               "by $tutor",
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
             ),
           ),
           Padding(
@@ -181,16 +181,16 @@ class ResourcesCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.favorite, size: 15),
+                    const Icon(Icons.favorite, size: 15),
                     Text("${likes} Likes")
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 40,
                 ),
                 Row(
                   children: [
-                    Icon(Icons.download, size: 20),
+                    const Icon(Icons.download, size: 20),
                     Text("${downloads} downloads"),
                   ],
                 )
