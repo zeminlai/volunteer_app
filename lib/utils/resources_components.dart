@@ -17,15 +17,14 @@ class ResourceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    final Size size = MediaQuery.of(context).size;
+    ScreenSize().init(context);
     return SizedBox(
-      width: SizeConfig.safeBlockHorizontal! * 100,
-      height: SizeConfig.safeBlockVertical! * 42,
+      width: ScreenSize.horizontal! * 100,
+      height: ScreenSize.vertical! * 42,
       child: Stack(alignment: Alignment.bottomCenter, children: [
         Container(
-          width: SizeConfig.safeBlockHorizontal! * 85,
-          height: SizeConfig.safeBlockVertical! * 38,
+          width: ScreenSize.horizontal! * 85,
+          height: ScreenSize.vertical! * 38,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(20),
@@ -38,7 +37,8 @@ class ResourceCard extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
                 child: Text(
                   title,
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.w700),
                 ),
               ),
               Padding(
@@ -47,21 +47,21 @@ class ResourceCard extends StatelessWidget {
                   children: [
                     Text(
                       smallerTitle,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
-                      height: SizeConfig.safeBlockVertical! * 1,
+                      height: ScreenSize.vertical! * 1,
                     ),
-                    TopResourceCard(
+                    const TopResourceCard(
                       title: "Sejarah Last Minute Quick Notes",
                       tutor: "jinzhetan",
                       likes: 123,
                     ),
                     SizedBox(
-                      height: SizeConfig.safeBlockVertical! * 2,
+                      height: ScreenSize.vertical! * 2,
                     ),
-                    TopResourceCard(
+                    const TopResourceCard(
                       title: "Chemistry Tips and Tricks",
                       tutor: "halo_tongxue",
                       likes: 79,
@@ -77,7 +77,7 @@ class ResourceCard extends StatelessWidget {
           right: 15,
           child: Image.asset(
             image,
-            scale: 1.4,
+            scale: ScreenSize.vertical! * 0.12,
           ),
         )
       ]),
@@ -100,8 +100,8 @@ class TopResourceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       //TOP RESOURCES CONTAINER
-      width: SizeConfig.safeBlockHorizontal! * 75,
-      height: SizeConfig.safeBlockVertical! * 11,
+      width: ScreenSize.horizontal! * 75,
+      height: ScreenSize.vertical! * 11,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -111,7 +111,7 @@ class TopResourceCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
           child: SizedBox(
-            width: SizeConfig.safeBlockHorizontal! * 50,
+            width: ScreenSize.horizontal! * 50,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +119,7 @@ class TopResourceCard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                      fontSize: (SizeConfig.safeBlockVertical! * 2),
+                      fontSize: (ScreenSize.vertical! * 2),
                       fontWeight: FontWeight.w500),
                 ),
                 Padding(
@@ -128,7 +128,7 @@ class TopResourceCard extends StatelessWidget {
                     "by $tutor",
                     style: TextStyle(
                       color: Colors.grey,
-                      fontSize: (SizeConfig.safeBlockVertical! * 1.8),
+                      fontSize: (ScreenSize.vertical! * 1.8),
                     ),
                   ),
                 )

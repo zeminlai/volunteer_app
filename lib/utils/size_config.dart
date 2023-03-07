@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SizeConfig {
+class ScreenSize {
   static MediaQueryData? _mediaQueryData;
   static double? screenWidth;
   static double? screenHeight;
@@ -11,6 +11,8 @@ class SizeConfig {
   static double? _safeAreaVertical;
   static double? safeBlockHorizontal;
   static double? safeBlockVertical;
+  static double? horizontal;
+  static double? vertical;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
@@ -25,5 +27,8 @@ class SizeConfig {
         _mediaQueryData!.padding.top + _mediaQueryData!.padding.bottom;
     safeBlockHorizontal = (screenWidth! - _safeAreaHorizontal!) / 100;
     safeBlockVertical = (screenHeight! - _safeAreaVertical!) / 100;
+
+    horizontal = safeBlockHorizontal;
+    vertical = safeBlockVertical;
   }
 }

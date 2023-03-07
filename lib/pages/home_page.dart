@@ -117,10 +117,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Padding(
                   //UPCOMING SESSIONS
-                  padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                   child: SizedBox(
                     width: 400,
-                    height: 120,
+                    height: 140,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(children: [
@@ -154,12 +154,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(154, 255, 255, 255),
+                    color: Color.fromARGB(186, 255, 255, 255),
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(40.0),
                       topLeft: Radius.circular(40.0),

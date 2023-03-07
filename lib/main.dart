@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:volunteer_app/pages/find_tutor_page.dart';
 import 'package:volunteer_app/pages/home_page.dart';
 import 'package:volunteer_app/pages/resources_page.dart';
+import 'package:volunteer_app/pages/sessions_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,8 +20,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      initialRoute: '/3',
       routes: {
         '/': (context) => HomePage(),
+        '/1': (context) => ResourcesPage(),
+        '/2': (context) => SessionsPage(),
+        '/3': (context) => FindTutorPage(),
       },
     );
   }

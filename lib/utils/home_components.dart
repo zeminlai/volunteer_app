@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:volunteer_app/utils/size_config.dart';
 
 class TutorCard extends StatefulWidget {
   final String? imageUrl;
@@ -80,15 +81,23 @@ class UpcomingCard extends StatefulWidget {
 class _UpcomingCardState extends State<UpcomingCard> {
   @override
   Widget build(BuildContext context) {
+    ScreenSize().init(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
       child: Container(
-        width: 120,
-        height: 120,
+        height: ScreenSize.vertical! * 15,
+        width: ScreenSize.horizontal! * 33,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.blue,
-        ),
+            borderRadius: BorderRadius.circular(20),
+            color: Color(0xff66B6FF),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 0,
+                blurRadius: 3,
+                offset: Offset(0, 2),
+              )
+            ]),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,9 +107,9 @@ class _UpcomingCardState extends State<UpcomingCard> {
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
                     widget.subject,
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white,
-                        fontSize: 27,
+                        fontSize: ScreenSize.vertical! * 2.9,
                         fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -151,8 +160,8 @@ class ResourcesCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 10,
+            spreadRadius: 0,
+            blurRadius: 5,
             offset: const Offset(0, 3),
           ),
         ],
