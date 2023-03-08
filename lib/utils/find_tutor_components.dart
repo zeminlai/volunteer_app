@@ -56,17 +56,16 @@ class Subject_DropdownState extends State<SubjectDropdown> {
 }
 
 // Subject selection
-class SubjectSelection extends StatefulWidget {
+class SubjectSelection extends StatelessWidget {
   List<String> subjects;
   late String subjectSelected;
+  final Function(String) onChanged;
   SubjectSelection(
-      {super.key, required this.subjects, required this.subjectSelected});
+      {super.key,
+      required this.subjects,
+      required this.subjectSelected,
+      required this.onChanged});
 
-  @override
-  State<SubjectSelection> createState() => _SubjectSelectionState();
-}
-
-class _SubjectSelectionState extends State<SubjectSelection> {
   @override
   Widget build(BuildContext context) {
     ScreenSize().init(context);
@@ -75,14 +74,12 @@ class _SubjectSelectionState extends State<SubjectSelection> {
       height: ScreenSize.vertical! * 4,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: widget.subjects.map((value) {
+        children: subjects.map((value) {
           return TextButton(
             onPressed: () {
-              setState(() {
-                widget.subjectSelected = value;
-              });
+              onChanged(value);
             },
-            child: (widget.subjectSelected == value)
+            child: (subjectSelected == value)
                 ? Text(
                     value,
                     style: TextStyle(
@@ -123,14 +120,25 @@ class _FindTutorSectionState extends State<FindTutorSection> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: ListTile(
-                leading: CircleAvatar(
-                  foregroundImage: NetworkImage(tutor["image"]),
-                  radius: ScreenSize.vertical! * 3,
-                ),
-                title: Text(tutor["name"]),
-                subtitle: Text(tutor["uni"]),
-                trailing: Text("${tutor["stars"]}"),
-              ),
+                  leading: CircleAvatar(
+                    foregroundImage: NetworkImage(tutor["image"]),
+                    radius: ScreenSize.vertical! * 3,
+                  ),
+                  title: Text(tutor["name"]),
+                  subtitle: Text(tutor["uni"]),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("${tutor["stars"]}"),
+                      SizedBox(
+                        width: ScreenSize.horizontal! * 1,
+                      ),
+                      Image.asset(
+                        "assets/star2.png",
+                        height: ScreenSize.horizontal! * 5,
+                      ),
+                    ],
+                  )),
             );
           },
           separatorBuilder: (context, index) => SizedBox(

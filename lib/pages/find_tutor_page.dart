@@ -10,18 +10,21 @@ class FindTutorPage extends StatefulWidget {
 }
 
 class _FindTutorPageState extends State<FindTutorPage> {
+  List<String> subjects = [
+    "Maths",
+    "Physics",
+    "BM",
+    "Add Maths",
+    "Biology",
+    "Sejarah"
+  ];
+  late String subjectSelected = subjects.first;
+
   @override
   Widget build(BuildContext context) {
     ScreenSize().init(context);
     List<String> level = ["SPM", "IGCSE", "PT3"];
-    List<String> subjects = [
-      "Maths",
-      "Physics",
-      "BM",
-      "Add Maths",
-      "Biology",
-      "Sejarah"
-    ];
+
     String dropdownValue = level.first;
 
     List<Map<String, dynamic>> tutorMaths = [
@@ -91,7 +94,31 @@ class _FindTutorPageState extends State<FindTutorPage> {
             "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
       },
     ];
-    String subjectSelected = 'Maths';
+    List<Map<String, dynamic>> tutorBM = [
+      {
+        "name": "Fatimah",
+        "uni": "Universiti Malaya",
+        "stars": 5.2,
+        "image":
+            "https://apicms.thestar.com.my/uploads/images/2022/05/15/1585587.jpg",
+      },
+    ];
+
+    Widget changeTutorList() {
+      switch (subjectSelected) {
+        case "Maths":
+          return FindTutorSection(tutorInfo: tutorMaths);
+        case "Physics":
+          return FindTutorSection(tutorInfo: tutorPhysics);
+        case "BM":
+          return FindTutorSection(tutorInfo: tutorBM);
+        default:
+          return FindTutorSection(
+            tutorInfo: tutorMaths,
+          );
+      }
+    }
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -150,14 +177,18 @@ class _FindTutorPageState extends State<FindTutorPage> {
                     SubjectSelection(
                       subjects: subjects,
                       subjectSelected: subjectSelected,
+                      onChanged: (String value) {
+                        setState(() {
+                          subjectSelected = value;
+                          print(subjectSelected);
+                        });
+                      },
                     ),
                     SizedBox(
                       height: ScreenSize.vertical! * 2,
                     ),
                     //Tutors
-                    (subjectSelected == 'Maths')
-                        ? FindTutorSection(tutorInfo: tutorMaths)
-                        : FindTutorSection(tutorInfo: tutorPhysics)
+                    changeTutorList()
                   ],
                 ),
               )
