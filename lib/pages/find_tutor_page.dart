@@ -24,13 +24,27 @@ class _FindTutorPageState extends State<FindTutorPage> {
     ];
     String dropdownValue = level.first;
 
-    List<Map<String, dynamic>> tutorInfo = [
+    List<Map<String, dynamic>> tutorMaths = [
       {
         "name": "TanJZ",
-        "uni": "Universiti Malaya",
+        "uni": "Universiti Indon Laurencia",
         "stars": 5.0,
         "image":
             "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-9/31817390_1448910555255518_2611503638257860608_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=-AcsCtl_ISIAX96Sr3k&_nc_oc=AQltIfNhMd8kd0PkRS7R6UbC9ORVT48fRNjCQPmkEQcqDJVtDoNwItcyTet-CVRLSh-Vdpr9HUPWxqaC238jyg2l&_nc_ht=scontent.fbki2-1.fna&oh=00_AfDgrR0z1TAJpm0W2T-FgVOBqNuuvzuq3jdZdhzg6g-PnA&oe=642FBF28",
+      },
+      {
+        "name": "CK Yong",
+        "uni": "Universiti Malaysia Sabah",
+        "stars": 5.0,
+        "image":
+            "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.18169-9/11018891_10152809453968650_1227892126726931894_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=0tkCHLoSHvkAX_izG2A&_nc_ht=scontent.fbki2-1.fna&oh=00_AfB-ODWSq2XEJZ5r1ZH0thGPGi5ka4C_79xJjh7sY97vlw&oe=64301B24",
+      },
+      {
+        "name": "LaiZM",
+        "uni": "Universiti Malaya",
+        "stars": 5.2,
+        "image":
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
       },
       {
         "name": "TanJZ",
@@ -40,20 +54,44 @@ class _FindTutorPageState extends State<FindTutorPage> {
             "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-9/31817390_1448910555255518_2611503638257860608_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=-AcsCtl_ISIAX96Sr3k&_nc_oc=AQltIfNhMd8kd0PkRS7R6UbC9ORVT48fRNjCQPmkEQcqDJVtDoNwItcyTet-CVRLSh-Vdpr9HUPWxqaC238jyg2l&_nc_ht=scontent.fbki2-1.fna&oh=00_AfDgrR0z1TAJpm0W2T-FgVOBqNuuvzuq3jdZdhzg6g-PnA&oe=642FBF28",
       },
       {
-        "name": "TanJZ",
+        "name": "LaiZM",
         "uni": "Universiti Malaya",
-        "stars": 5.0,
+        "stars": 5.2,
         "image":
-            "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-9/31817390_1448910555255518_2611503638257860608_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=-AcsCtl_ISIAX96Sr3k&_nc_oc=AQltIfNhMd8kd0PkRS7R6UbC9ORVT48fRNjCQPmkEQcqDJVtDoNwItcyTet-CVRLSh-Vdpr9HUPWxqaC238jyg2l&_nc_ht=scontent.fbki2-1.fna&oh=00_AfDgrR0z1TAJpm0W2T-FgVOBqNuuvzuq3jdZdhzg6g-PnA&oe=642FBF28",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
       },
       {
-        "name": "TanJZ",
+        "name": "LaiZM",
         "uni": "Universiti Malaya",
-        "stars": 5.0,
+        "stars": 5.2,
         "image":
-            "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-9/31817390_1448910555255518_2611503638257860608_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=-AcsCtl_ISIAX96Sr3k&_nc_oc=AQltIfNhMd8kd0PkRS7R6UbC9ORVT48fRNjCQPmkEQcqDJVtDoNwItcyTet-CVRLSh-Vdpr9HUPWxqaC238jyg2l&_nc_ht=scontent.fbki2-1.fna&oh=00_AfDgrR0z1TAJpm0W2T-FgVOBqNuuvzuq3jdZdhzg6g-PnA&oe=642FBF28",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
+      },
+      {
+        "name": "LaiZM",
+        "uni": "Universiti Malaya",
+        "stars": 5.2,
+        "image":
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
+      },
+      {
+        "name": "LaiZM",
+        "uni": "Universiti Malaya",
+        "stars": 5.2,
+        "image":
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
       },
     ];
+    List<Map<String, dynamic>> tutorPhysics = [
+      {
+        "name": "LaiZM",
+        "uni": "Universiti Malaya",
+        "stars": 5.2,
+        "image":
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
+      },
+    ];
+    String subjectSelected = 'Maths';
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -70,8 +108,12 @@ class _FindTutorPageState extends State<FindTutorPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(ScreenSize.horizontal! * 5,
-                    ScreenSize.vertical! * 5, ScreenSize.horizontal! * 5, 0),
+                padding: EdgeInsets.fromLTRB(
+                  ScreenSize.horizontal! * 5,
+                  ScreenSize.vertical! * 5,
+                  ScreenSize.horizontal! * 5,
+                  0,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -97,7 +139,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                 padding: EdgeInsets.all(ScreenSize.horizontal! * 5),
                 width: ScreenSize.horizontal! * 100,
                 height: ScreenSize.vertical! * 78,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color.fromARGB(155, 255, 255, 255),
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(40),
@@ -107,10 +149,15 @@ class _FindTutorPageState extends State<FindTutorPage> {
                     //Subjects
                     SubjectSelection(
                       subjects: subjects,
+                      subjectSelected: subjectSelected,
                     ),
-
+                    SizedBox(
+                      height: ScreenSize.vertical! * 2,
+                    ),
                     //Tutors
-                    FindTutorSection(tutorInfo: tutorInfo)
+                    (subjectSelected == 'Maths')
+                        ? FindTutorSection(tutorInfo: tutorMaths)
+                        : FindTutorSection(tutorInfo: tutorPhysics)
                   ],
                 ),
               )

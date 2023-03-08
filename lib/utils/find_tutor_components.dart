@@ -20,17 +20,17 @@ class Subject_DropdownState extends State<SubjectDropdown> {
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide:
-                BorderSide(color: Color.fromARGB(155, 255, 255, 255), width: 2),
+            borderSide: const BorderSide(
+                color: Color.fromARGB(155, 255, 255, 255), width: 2),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide:
-                BorderSide(color: Color.fromARGB(1, 255, 255, 255), width: 2),
+            borderSide: const BorderSide(
+                color: Color.fromARGB(1, 255, 255, 255), width: 2),
           ),
           filled: true,
-          fillColor: Color.fromARGB(155, 255, 255, 255),
-          contentPadding: EdgeInsets.all(10)),
+          fillColor: const Color.fromARGB(155, 255, 255, 255),
+          contentPadding: const EdgeInsets.all(10)),
       isExpanded: true,
       value: widget.dropdownValue,
       items: widget.level.map<DropdownMenuItem<String>>((String value) {
@@ -39,7 +39,7 @@ class Subject_DropdownState extends State<SubjectDropdown> {
           child: Center(
             child: Text(
               value,
-              style: TextStyle(fontSize: 15),
+              style: const TextStyle(fontSize: 15),
             ),
           ),
         );
@@ -58,16 +58,15 @@ class Subject_DropdownState extends State<SubjectDropdown> {
 // Subject selection
 class SubjectSelection extends StatefulWidget {
   List<String> subjects;
-
-  SubjectSelection({super.key, required this.subjects});
+  late String subjectSelected;
+  SubjectSelection(
+      {super.key, required this.subjects, required this.subjectSelected});
 
   @override
   State<SubjectSelection> createState() => _SubjectSelectionState();
 }
 
 class _SubjectSelectionState extends State<SubjectSelection> {
-  late String subjectSelected = widget.subjects.first;
-
   @override
   Widget build(BuildContext context) {
     ScreenSize().init(context);
@@ -80,11 +79,10 @@ class _SubjectSelectionState extends State<SubjectSelection> {
           return TextButton(
             onPressed: () {
               setState(() {
-                subjectSelected = value;
-                print(subjectSelected);
+                widget.subjectSelected = value;
               });
             },
-            child: (subjectSelected == value)
+            child: (widget.subjectSelected == value)
                 ? Text(
                     value,
                     style: TextStyle(
@@ -115,18 +113,29 @@ class _FindTutorSectionState extends State<FindTutorSection> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: widget.tutorInfo.length,
-        itemBuilder: (context, index) {
-          final tutor = widget.tutorInfo[index];
-          return ListTile(
-            leading: Image.network(tutor["image"]),
-            title: Text(tutor["name"]),
-            subtitle: Text(tutor["uni"]),
-            trailing: Text("${tutor["stars"]}"),
-          );
-        },
-      ),
+      child: ListView.separated(
+          itemCount: widget.tutorInfo.length,
+          itemBuilder: (context, index) {
+            final tutor = widget.tutorInfo[index];
+            return Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: ListTile(
+                leading: CircleAvatar(
+                  foregroundImage: NetworkImage(tutor["image"]),
+                  radius: ScreenSize.vertical! * 3,
+                ),
+                title: Text(tutor["name"]),
+                subtitle: Text(tutor["uni"]),
+                trailing: Text("${tutor["stars"]}"),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) => SizedBox(
+                height: ScreenSize.vertical! * 2,
+              )),
     );
   }
 }
