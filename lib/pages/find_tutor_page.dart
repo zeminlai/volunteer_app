@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:volunteer_app/utils/find_tutor_components.dart';
 import 'package:volunteer_app/utils/size_config.dart';
@@ -10,114 +11,17 @@ class FindTutorPage extends StatefulWidget {
 }
 
 class _FindTutorPageState extends State<FindTutorPage> {
-  List<String> subjects = [
-    "Maths",
-    "Physics",
-    "BM",
-    "Add Maths",
-    "Biology",
-    "Sejarah"
-  ];
+  List subjects = [];
   late String subjectSelected = subjects.first;
 
+  List<String> level = ["SPM", "IGCSE", "PT3"];
+
+  late String dropdownValue = level.first;
   @override
   Widget build(BuildContext context) {
     ScreenSize().init(context);
-    List<String> level = ["SPM", "IGCSE", "PT3"];
-
-    String dropdownValue = level.first;
-
-    List<Map<String, dynamic>> tutorMaths = [
-      {
-        "name": "TanJZ",
-        "uni": "Universiti Indon Laurencia",
-        "stars": 5.0,
-        "image":
-            "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-9/31817390_1448910555255518_2611503638257860608_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=-AcsCtl_ISIAX96Sr3k&_nc_oc=AQltIfNhMd8kd0PkRS7R6UbC9ORVT48fRNjCQPmkEQcqDJVtDoNwItcyTet-CVRLSh-Vdpr9HUPWxqaC238jyg2l&_nc_ht=scontent.fbki2-1.fna&oh=00_AfDgrR0z1TAJpm0W2T-FgVOBqNuuvzuq3jdZdhzg6g-PnA&oe=642FBF28",
-      },
-      {
-        "name": "CK Yong",
-        "uni": "Universiti Malaysia Sabah",
-        "stars": 5.0,
-        "image":
-            "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.18169-9/11018891_10152809453968650_1227892126726931894_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=0tkCHLoSHvkAX_izG2A&_nc_ht=scontent.fbki2-1.fna&oh=00_AfB-ODWSq2XEJZ5r1ZH0thGPGi5ka4C_79xJjh7sY97vlw&oe=64301B24",
-      },
-      {
-        "name": "LaiZM",
-        "uni": "Universiti Malaya",
-        "stars": 5.2,
-        "image":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
-      },
-      {
-        "name": "TanJZ",
-        "uni": "Universiti Malaya",
-        "stars": 5.0,
-        "image":
-            "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-9/31817390_1448910555255518_2611503638257860608_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=-AcsCtl_ISIAX96Sr3k&_nc_oc=AQltIfNhMd8kd0PkRS7R6UbC9ORVT48fRNjCQPmkEQcqDJVtDoNwItcyTet-CVRLSh-Vdpr9HUPWxqaC238jyg2l&_nc_ht=scontent.fbki2-1.fna&oh=00_AfDgrR0z1TAJpm0W2T-FgVOBqNuuvzuq3jdZdhzg6g-PnA&oe=642FBF28",
-      },
-      {
-        "name": "LaiZM",
-        "uni": "Universiti Malaya",
-        "stars": 5.2,
-        "image":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
-      },
-      {
-        "name": "LaiZM",
-        "uni": "Universiti Malaya",
-        "stars": 5.2,
-        "image":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
-      },
-      {
-        "name": "LaiZM",
-        "uni": "Universiti Malaya",
-        "stars": 5.2,
-        "image":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
-      },
-      {
-        "name": "LaiZM",
-        "uni": "Universiti Malaya",
-        "stars": 5.2,
-        "image":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
-      },
-    ];
-    List<Map<String, dynamic>> tutorPhysics = [
-      {
-        "name": "LaiZM",
-        "uni": "Universiti Malaya",
-        "stars": 5.2,
-        "image":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg",
-      },
-    ];
-    List<Map<String, dynamic>> tutorBM = [
-      {
-        "name": "Fatimah",
-        "uni": "Universiti Malaya",
-        "stars": 5.2,
-        "image":
-            "https://apicms.thestar.com.my/uploads/images/2022/05/15/1585587.jpg",
-      },
-    ];
-
-    Widget changeTutorList() {
-      switch (subjectSelected) {
-        case "Maths":
-          return FindTutorSection(tutorInfo: tutorMaths);
-        case "Physics":
-          return FindTutorSection(tutorInfo: tutorPhysics);
-        case "BM":
-          return FindTutorSection(tutorInfo: tutorBM);
-        default:
-          return FindTutorSection(
-            tutorInfo: tutorMaths,
-          );
-      }
-    }
+    final subjectsData = FirebaseFirestore.instance.collection('levels');
+    final tutorData = FirebaseFirestore.instance.collection('tutors');
 
     return Scaffold(
       body: Container(
@@ -156,7 +60,16 @@ class _FindTutorPageState extends State<FindTutorPage> {
                     ),
 
                     // LEVEL SELECTION INPUT FIELD
-                    SubjectDropdown(level: level, dropdownValue: dropdownValue),
+                    LevelDropdown(
+                      level: level,
+                      dropdownValue: dropdownValue,
+                      onLevelChanged: (String value) {
+                        setState(() {
+                          dropdownValue = value;
+                          subjectSelected = "Maths";
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -174,21 +87,76 @@ class _FindTutorPageState extends State<FindTutorPage> {
                 child: Column(
                   children: [
                     //Subjects
-                    SubjectSelection(
-                      subjects: subjects,
-                      subjectSelected: subjectSelected,
-                      onChanged: (String value) {
-                        setState(() {
-                          subjectSelected = value;
-                          print(subjectSelected);
-                        });
+                    StreamBuilder(
+                      stream: subjectsData.snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final subjectsDocs = snapshot.data!.docs;
+                          for (int i = 0; i < subjectsDocs.length; i++) {
+                            if (subjectsDocs[i]["level"] == dropdownValue) {
+                              subjects = subjectsDocs[i]['subjects'];
+                            }
+                          }
+                          return SubjectSelection(
+                            subjects: subjects,
+                            subjectSelected: subjectSelected,
+                            onChanged: (String value) {
+                              setState(
+                                () {
+                                  subjectSelected = value;
+                                  print(subjectSelected);
+                                },
+                              );
+                            },
+                          );
+                        } else {
+                          return Text("error when getting subject data");
+                        }
                       },
                     ),
                     SizedBox(
                       height: ScreenSize.vertical! * 2,
                     ),
                     //Tutors
-                    changeTutorList()
+                    StreamBuilder(
+                      stream: tutorData.snapshots(),
+                      builder: (context, snapshot) {
+                        final tutorDocs = snapshot.data!.docs;
+                        final List filteredTutors = [];
+                        // Filter tutors by subject and store in filteredTutors
+                        for (int i = 0; i < tutorDocs.length; i++) {
+                          if (tutorDocs[i]["subject"] == subjectSelected &&
+                              tutorDocs[i]["level"] == dropdownValue) {
+                            print(tutorDocs[i]["name"]);
+                            filteredTutors.add(tutorDocs[i]);
+                          }
+                        }
+                        print(filteredTutors);
+                        if (snapshot.hasData) {
+                          return Expanded(
+                            child: ListView.separated(
+                                itemBuilder: (context, index) {
+                                  final currentTutor = filteredTutors[index];
+
+                                  return FindTutorCard(
+                                    tutorName: currentTutor["name"],
+                                    tutorUni: currentTutor["uni"],
+                                    tutorImage: currentTutor["image"],
+                                    tutorStars: double.parse(
+                                      currentTutor["stars"].toString(),
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) => SizedBox(
+                                      height: ScreenSize.vertical! * 2,
+                                    ),
+                                itemCount: filteredTutors.length),
+                          );
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    )
                   ],
                 ),
               )

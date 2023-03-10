@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 
 class ScreenSize {
-  static MediaQueryData? _mediaQueryData;
-  static double? screenWidth;
-  static double? screenHeight;
-  static double? blockSizeHorizontal;
-  static double? blockSizeVertical;
+  MediaQueryData? _mediaQueryData;
+  double? _screenWidth;
+  double? _screenHeight;
+  double? _blockSizeHorizontal;
+  double? _blockSizeVertical;
 
-  static double? _safeAreaHorizontal;
-  static double? _safeAreaVertical;
-  static double? safeBlockHorizontal;
-  static double? safeBlockVertical;
+  double? _safeAreaHorizontal;
+  double? _safeAreaVertical;
+  double? _safeBlockHorizontal;
+  double? _safeBlockVertical;
   static double? horizontal;
   static double? vertical;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
-    screenWidth = _mediaQueryData!.size.width;
-    screenHeight = _mediaQueryData!.size.height;
-    blockSizeHorizontal = screenWidth! / 100;
-    blockSizeVertical = screenHeight! / 100;
+    _screenWidth = _mediaQueryData!.size.width;
+    _screenHeight = _mediaQueryData!.size.height;
+    _blockSizeHorizontal = _screenWidth! / 100;
+    _blockSizeVertical = _screenHeight! / 100;
 
     _safeAreaHorizontal =
         _mediaQueryData!.padding.left + _mediaQueryData!.padding.right;
     _safeAreaVertical =
         _mediaQueryData!.padding.top + _mediaQueryData!.padding.bottom;
-    safeBlockHorizontal = (screenWidth! - _safeAreaHorizontal!) / 100;
-    safeBlockVertical = (screenHeight! - _safeAreaVertical!) / 100;
+    _safeBlockHorizontal = (_screenWidth! - _safeAreaHorizontal!) / 100;
+    _safeBlockVertical = (_screenHeight! - _safeAreaVertical!) / 100;
 
-    horizontal = safeBlockHorizontal;
-    vertical = safeBlockVertical;
+    horizontal = _safeBlockHorizontal;
+    vertical = _safeBlockVertical;
   }
 }

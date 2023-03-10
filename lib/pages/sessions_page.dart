@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:volunteer_app/utils/find_tutor_components.dart';
 import 'package:volunteer_app/utils/size_config.dart';
 
 import '../utils/home_components.dart';
@@ -78,14 +79,13 @@ class _SessionsPageState extends State<SessionsPage> {
                                 height: ScreenSize.vertical! * 0.1,
                               ),
                               Container(
-                                width: ScreenSize.blockSizeHorizontal! * 89,
+                                width: ScreenSize.horizontal! * 89,
                                 height: ScreenSize.vertical! * 17,
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(children: [
                                     SizedBox(
-                                      width:
-                                          ScreenSize.blockSizeHorizontal! * 6,
+                                      width: ScreenSize.horizontal! * 6,
                                     ),
                                     UpcomingCard(
                                       subject: "Science",
@@ -113,8 +113,7 @@ class _SessionsPageState extends State<SessionsPage> {
                                       duration: "9:30-10:00",
                                     ),
                                     SizedBox(
-                                      width:
-                                          ScreenSize.blockSizeHorizontal! * 5,
+                                      width: ScreenSize.horizontal! * 5,
                                     ),
                                   ]),
                                 ),
@@ -154,8 +153,7 @@ class _SessionsPageState extends State<SessionsPage> {
                                 fontSize: ScreenSize.vertical! * 3,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
-                                letterSpacing:
-                                    ScreenSize.blockSizeVertical! * 0.1),
+                                letterSpacing: ScreenSize.vertical! * 0.1),
                           ),
                         ),
                       ),

@@ -1,19 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:volunteer_app/utils/size_config.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 // Subject dropdown menu
-class SubjectDropdown extends StatefulWidget {
+class LevelDropdown extends StatefulWidget {
   List<String> level;
   String dropdownValue;
+  final Function(String) onLevelChanged;
 
-  SubjectDropdown(
-      {super.key, required this.level, required this.dropdownValue});
+  LevelDropdown(
+      {super.key,
+      required this.level,
+      required this.dropdownValue,
+      required this.onLevelChanged});
 
   @override
-  State<SubjectDropdown> createState() => Subject_DropdownState();
+  State<LevelDropdown> createState() => Level_DropdownState();
 }
 
-class Subject_DropdownState extends State<SubjectDropdown> {
+class Level_DropdownState extends State<LevelDropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
@@ -45,11 +51,7 @@ class Subject_DropdownState extends State<SubjectDropdown> {
         );
       }).toList(),
       onChanged: (value) {
-        setState(
-          () {
-            widget.dropdownValue = value!;
-          },
-        );
+        widget.onLevelChanged(value!);
       },
     );
   }
@@ -57,8 +59,8 @@ class Subject_DropdownState extends State<SubjectDropdown> {
 
 // Subject selection
 class SubjectSelection extends StatelessWidget {
-  List<String> subjects;
-  late String subjectSelected;
+  final List subjects;
+  final String subjectSelected;
   final Function(String) onChanged;
   SubjectSelection(
       {super.key,
@@ -71,79 +73,78 @@ class SubjectSelection extends StatelessWidget {
     ScreenSize().init(context);
     return Container(
       width: ScreenSize.horizontal! * 100,
-      height: ScreenSize.vertical! * 4,
+      height: ScreenSize.vertical! * 5,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: subjects.map((value) {
-          return TextButton(
-            onPressed: () {
-              onChanged(value);
-            },
-            child: (subjectSelected == value)
-                ? Text(
-                    value,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: ScreenSize.vertical! * 2),
-                  )
-                : Text(
-                    value,
-                    style: TextStyle(
-                        color: Colors.grey, fontSize: ScreenSize.vertical! * 2),
-                  ),
-          );
-        }).toList(),
+        children: subjects.map(
+          (value) {
+            return TextButton(
+              onPressed: () {
+                onChanged(value);
+              },
+              child: (subjectSelected == value)
+                  ? Text(
+                      value,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: ScreenSize.vertical! * 2),
+                    )
+                  : Text(
+                      value,
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenSize.vertical! * 2),
+                    ),
+            );
+          },
+        ).toList(),
       ),
     );
   }
 }
 
-class FindTutorSection extends StatefulWidget {
-  List<Map<String, dynamic>> tutorInfo = [{}];
-  FindTutorSection({super.key, required this.tutorInfo});
+class FindTutorCard extends StatelessWidget {
+  final String tutorName;
+  final String tutorImage;
+  final String tutorUni;
+  final double tutorStars;
 
-  @override
-  State<FindTutorSection> createState() => _FindTutorSectionState();
-}
+  const FindTutorCard({
+    super.key,
+    required this.tutorName,
+    required this.tutorUni,
+    required this.tutorImage,
+    required this.tutorStars,
+  });
 
-class _FindTutorSectionState extends State<FindTutorSection> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-          itemCount: widget.tutorInfo.length,
-          itemBuilder: (context, index) {
-            final tutor = widget.tutorInfo[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: ListTile(
+          leading: CircleAvatar(
+            foregroundImage: NetworkImage(tutorImage),
+            radius: ScreenSize.vertical! * 3,
+          ),
+          title: Text(tutorName),
+          subtitle: Text(tutorUni),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("$tutorStars"),
+              SizedBox(
+                width: ScreenSize.horizontal! * 1,
               ),
-              child: ListTile(
-                  leading: CircleAvatar(
-                    foregroundImage: NetworkImage(tutor["image"]),
-                    radius: ScreenSize.vertical! * 3,
-                  ),
-                  title: Text(tutor["name"]),
-                  subtitle: Text(tutor["uni"]),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("${tutor["stars"]}"),
-                      SizedBox(
-                        width: ScreenSize.horizontal! * 1,
-                      ),
-                      Image.asset(
-                        "assets/star2.png",
-                        height: ScreenSize.horizontal! * 5,
-                      ),
-                    ],
-                  )),
-            );
-          },
-          separatorBuilder: (context, index) => SizedBox(
-                height: ScreenSize.vertical! * 2,
-              )),
+              Image.asset(
+                "assets/star2.png",
+                height: ScreenSize.horizontal! * 5,
+              ),
+            ],
+          )),
     );
+    ;
   }
 }
