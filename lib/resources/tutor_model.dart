@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Tutor {
   final String name;
   final String level;
@@ -14,4 +17,15 @@ class Tutor {
     required this.uni,
     required this.stars,
   });
+
+  Future addTutor() async {
+    return FirebaseFirestore.instance.collection('tutors').add({
+      "name": name,
+      "level": level,
+      "image": image,
+      "subject": subject,
+      "uni": uni,
+      "stars": stars,
+    });
+  }
 }
