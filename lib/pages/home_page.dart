@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/home_components.dart';
+import '../utils/size_config.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    ScreenSize().init(context);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -119,8 +121,8 @@ class _HomePageState extends State<HomePage> {
                   //UPCOMING SESSIONS
                   padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                   child: SizedBox(
-                    width: 400,
-                    height: 140,
+                    width: ScreenSize.horizontal! * 100,
+                    height: ScreenSize.vertical! * 20,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(children: [

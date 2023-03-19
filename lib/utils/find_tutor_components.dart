@@ -103,38 +103,182 @@ class SubjectSelection extends StatelessWidget {
   }
 }
 
-class FindTutorCard extends StatelessWidget {
+class FindTutorCard extends StatefulWidget {
   final String tutorName;
   final String tutorImage;
   final String tutorUni;
   final double tutorStars;
-
+  final String tutorSubject;
+  final String tutorBio;
   const FindTutorCard({
     super.key,
     required this.tutorName,
     required this.tutorUni,
     required this.tutorImage,
     required this.tutorStars,
+    required this.tutorSubject,
+    required this.tutorBio,
   });
 
   @override
+  State<FindTutorCard> createState() => _FindTutorCardState();
+}
+
+class _FindTutorCardState extends State<FindTutorCard> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: ListTile(
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30),
+              topLeft: Radius.circular(30),
+            ),
+          ),
+          builder: (context) {
+            return Container(
+              height: ScreenSize.vertical! * 40,
+              margin: EdgeInsets.all(ScreenSize.horizontal! * 5),
+              child: Column(
+                children: [
+                  // TOP
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Profile pic
+                      CircleAvatar(
+                        foregroundImage: NetworkImage(widget.tutorImage),
+                        radius: ScreenSize.vertical! * 6,
+                      ),
+                      // Name, uni, subjects
+
+                      Expanded(
+                        child: Container(
+                          margin:
+                              EdgeInsets.only(left: ScreenSize.horizontal! * 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                widget.tutorName,
+                                style: TextStyle(
+                                  fontSize: ScreenSize.vertical! * 3,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                widget.tutorUni,
+                                style: TextStyle(
+                                  fontSize: ScreenSize.vertical! * 2,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                              SizedBox(
+                                height: ScreenSize.vertical! * 1.5,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 140, 211, 128),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: Text(
+                                    widget.tutorSubject,
+                                    style: TextStyle(
+                                      fontSize: ScreenSize.vertical! * 2,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Rating
+
+                      Column(
+                        children: [
+                          Text(
+                            "${widget.tutorStars}",
+                            style: TextStyle(
+                              fontSize: ScreenSize.vertical! * 5,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            "Rating",
+                            style: TextStyle(
+                              fontSize: ScreenSize.vertical! * 2.5,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: ScreenSize.vertical! * 2,
+                  ),
+                  // Description
+                  Text(
+                    widget.tutorBio,
+                    style: TextStyle(
+                        fontSize: ScreenSize.vertical! * 2,
+                        fontWeight: FontWeight.w300,
+                        color: Color.fromARGB(255, 144, 141, 141)),
+                  ),
+                  SizedBox(
+                    height: ScreenSize.vertical! * 5,
+                  ),
+                  // Book tutor button
+                  Container(
+                    height: ScreenSize.vertical! * 5,
+                    width: ScreenSize.horizontal! * 90,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff9F9DF3),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        "BOOK TUTOR",
+                        style: TextStyle(
+                          fontSize: ScreenSize.vertical! * 2.5,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
+                  )
+                  // Reviews
+                ],
+              ),
+            );
+          },
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: ListTile(
           leading: CircleAvatar(
-            foregroundImage: NetworkImage(tutorImage),
+            foregroundImage: NetworkImage(widget.tutorImage),
             radius: ScreenSize.vertical! * 3,
           ),
-          title: Text(tutorName),
-          subtitle: Text(tutorUni),
+          title: Text(widget.tutorName),
+          subtitle: Text(widget.tutorUni),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("$tutorStars"),
+              Text("${widget.tutorStars}"),
               SizedBox(
                 width: ScreenSize.horizontal! * 1,
               ),
@@ -143,7 +287,9 @@ class FindTutorCard extends StatelessWidget {
                 height: ScreenSize.horizontal! * 5,
               ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
     ;
   }

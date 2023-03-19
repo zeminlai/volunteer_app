@@ -158,6 +158,8 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                     tutorStars: double.parse(
                                       currentTutor["stars"].toString(),
                                     ),
+                                    tutorSubject: currentTutor["subject"],
+                                    tutorBio: currentTutor["bio"],
                                   );
                                 },
                                 separatorBuilder: (context, index) => SizedBox(
