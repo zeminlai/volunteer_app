@@ -122,7 +122,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                             },
                           );
                         } else {
-                          return Text("error when getting subject data");
+                          return const Text("error when getting subject data");
                         }
                       },
                     ),
@@ -150,7 +150,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                 itemBuilder: (context, index) {
                                   // Loop through filteredTutors List
                                   final currentTutor = filteredTutors[index];
-
+                                  print(currentTutor.id);
                                   return FindTutorCard(
                                     tutorName: currentTutor["name"],
                                     tutorUni: currentTutor["uni"],
@@ -160,6 +160,9 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                     ),
                                     tutorSubject: currentTutor["subject"],
                                     tutorBio: currentTutor["bio"],
+                                    id: currentTutor.id,
+                                    tutorLevel: dropdownValue,
+                                    bookTutorButton: true,
                                   );
                                 },
                                 separatorBuilder: (context, index) => SizedBox(
@@ -168,7 +171,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                 itemCount: filteredTutors.length),
                           );
                         } else {
-                          return Text("Error getting tutor data");
+                          return const Text("Error getting tutor data");
                         }
                       },
                     )

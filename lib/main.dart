@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:volunteer_app/pages/book_session_page.dart';
 import 'package:volunteer_app/pages/find_tutor_page.dart';
 import 'package:volunteer_app/pages/home_page.dart';
 import 'package:volunteer_app/pages/resources_page.dart';
@@ -29,6 +30,15 @@ class MyApp extends StatelessWidget {
         '/1': (context) => ResourcesPage(),
         '/2': (context) => SessionsPage(),
         '/3': (context) => FindTutorPage(),
+        '/book_session': (context) => BookSessionPage(
+            tutorName: "hello",
+            tutorUni: "UM",
+            tutorImage:
+                "https://www.ocpathink.org/uploads/assets/img/Teacher-in-front-of-chalkboard.jpeg",
+            tutorStars: 5,
+            tutorSubject: "Maths",
+            tutorBio: "we only live once",
+            id: "asdfjlkjk12321"),
       },
     );
   }

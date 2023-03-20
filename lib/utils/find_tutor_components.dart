@@ -110,6 +110,9 @@ class FindTutorCard extends StatefulWidget {
   final double tutorStars;
   final String tutorSubject;
   final String tutorBio;
+  final String id;
+  final String tutorLevel;
+  final bool bookTutorButton;
   const FindTutorCard({
     super.key,
     required this.tutorName,
@@ -118,6 +121,9 @@ class FindTutorCard extends StatefulWidget {
     required this.tutorStars,
     required this.tutorSubject,
     required this.tutorBio,
+    required this.id,
+    required this.tutorLevel,
+    required this.bookTutorButton,
   });
 
   @override
@@ -181,7 +187,8 @@ class _FindTutorCardState extends State<FindTutorCard> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 140, 211, 128),
+                                    color: const Color.fromARGB(
+                                        255, 140, 211, 128),
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(3),
@@ -235,27 +242,44 @@ class _FindTutorCardState extends State<FindTutorCard> {
                     height: ScreenSize.vertical! * 5,
                   ),
                   // Book tutor button
-                  Container(
-                    height: ScreenSize.vertical! * 5,
-                    width: ScreenSize.horizontal! * 90,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff9F9DF3),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        "BOOK TUTOR",
-                        style: TextStyle(
-                          fontSize: ScreenSize.vertical! * 2.5,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                    ),
-                  )
+                  // Check if bookTutorButton is true or false
+                  widget.bookTutorButton
+                      // If true, show button
+                      ? Container(
+                          height: ScreenSize.vertical! * 5,
+                          width: ScreenSize.horizontal! * 90,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff9F9DF3),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/book_session',
+                                  arguments: {
+                                    "tutorName": widget.tutorName,
+                                    "tutorUni": widget.tutorUni,
+                                    "tutorStars": widget.tutorStars,
+                                    "tutorImage": widget.tutorImage,
+                                    "tutorSubject": widget.tutorSubject,
+                                    "tutorBio": widget.tutorBio,
+                                    "tutorID": widget.id,
+                                    "tutorLevel": widget.tutorLevel,
+                                  });
+                            },
+                            child: Text(
+                              "BOOK TUTOR",
+                              style: TextStyle(
+                                fontSize: ScreenSize.vertical! * 2.5,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ),
+                        )
+                      // If false, show empty container
+                      : Container(),
                   // Reviews
                 ],
               ),
