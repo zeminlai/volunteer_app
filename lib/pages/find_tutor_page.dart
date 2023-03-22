@@ -150,7 +150,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                 itemBuilder: (context, index) {
                                   // Loop through filteredTutors List
                                   final currentTutor = filteredTutors[index];
-                                  print(currentTutor.id);
+                                  print(currentTutor["sessions"].runtimeType);
                                   return FindTutorCard(
                                     tutorName: currentTutor["name"],
                                     tutorUni: currentTutor["uni"],
@@ -162,6 +162,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                     tutorBio: currentTutor["bio"],
                                     id: currentTutor.id,
                                     tutorLevel: dropdownValue,
+                                    tutorSessionIDs: currentTutor["sessions"],
                                     bookTutorButton: true,
                                   );
                                 },

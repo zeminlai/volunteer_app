@@ -1,119 +1,213 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../utils/size_config.dart';
 import '../utils/find_tutor_components.dart';
+import 'package:table_calendar/table_calendar.dart';
+import '../models/session.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class BookSessionPage extends StatefulWidget {
-  final String tutorName;
-  final String tutorImage;
-  final String tutorUni;
-  final double tutorStars;
-  final String tutorSubject;
-  final String tutorBio;
-  final String id;
-  const BookSessionPage({
-    super.key,
-    required this.tutorName,
-    required this.tutorUni,
-    required this.tutorImage,
-    required this.tutorStars,
-    required this.tutorSubject,
-    required this.tutorBio,
-    required this.id,
-  });
-
   @override
   State<BookSessionPage> createState() => _BookSessionPageState();
 }
 
 class _BookSessionPageState extends State<BookSessionPage> {
+  Map<DateTime, List<Session>> bookedSessions = {};
+  List<Session> _getSessionsfromDay(DateTime date) {
+    return bookedSessions[date] ?? [];
+  }
+
+  DateTime selectDay = DateTime.now();
   @override
   Widget build(BuildContext context) {
+    final sessionsData = FirebaseFirestore.instance.collection('sessions');
     final arguments = ModalRoute.of(context)!.settings.arguments as Map;
-    print(arguments);
     ScreenSize().init(context);
+
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/book_session_bg.png'),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/book_session_bg.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Back button
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back, size: ScreenSize.horizontal! * 8),
-              ),
-
-              Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: ScreenSize.horizontal! * 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Title
-                    Text(
-                      "Book a session",
-                      style: TextStyle(
-                        fontSize: ScreenSize.vertical! * 4,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    // Level subject indicator
-                    Row(
-                      children: [
-                        Text(
-                          arguments["tutorLevel"],
-                          style: TextStyle(
-                            fontSize: ScreenSize.vertical! * 3,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                        SizedBox(
-                          width: ScreenSize.horizontal! * 2,
-                        ),
-                        Image.asset("assets/fast-forward.png", scale: 22),
-                        SizedBox(
-                          width: ScreenSize.horizontal! * 2,
-                        ),
-                        Text(
-                          arguments["tutorSubject"],
-                          style: TextStyle(
-                            fontSize: ScreenSize.vertical! * 3,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: ScreenSize.vertical! * 6,
-                    ),
-                    FindTutorCard(
-                      tutorName: arguments["tutorName"],
-                      tutorUni: arguments["tutorUni"],
-                      tutorImage: arguments["tutorImage"],
-                      tutorStars: arguments["tutorStars"],
-                      tutorSubject: arguments["tutorSubject"],
-                      tutorBio: arguments["tutorBio"],
-                      id: arguments["tutorID"],
-                      tutorLevel: arguments["tutorLevel"],
-                      bookTutorButton: false,
-                    )
-                  ],
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Back button
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon:
+                      Icon(Icons.arrow_back, size: ScreenSize.horizontal! * 8),
                 ),
-              )
 
-              // Tutor card
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: ScreenSize.horizontal! * 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Title
+                      Text(
+                        "Book a session",
+                        style: TextStyle(
+                          fontSize: ScreenSize.vertical! * 4,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      // Level subject indicator
+                      Row(
+                        children: [
+                          Text(
+                            arguments["tutorLevel"],
+                            style: TextStyle(
+                              fontSize: ScreenSize.vertical! * 3,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          SizedBox(
+                            width: ScreenSize.horizontal! * 2,
+                          ),
+                          Image.asset("assets/fast-forward.png", scale: 22),
+                          SizedBox(
+                            width: ScreenSize.horizontal! * 2,
+                          ),
+                          Text(
+                            arguments["tutorSubject"],
+                            style: TextStyle(
+                              fontSize: ScreenSize.vertical! * 3,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: ScreenSize.vertical! * 5,
+                      ),
+                      FindTutorCard(
+                        tutorName: arguments["tutorName"],
+                        tutorUni: arguments["tutorUni"],
+                        tutorImage: arguments["tutorImage"],
+                        tutorStars: arguments["tutorStars"],
+                        tutorSubject: arguments["tutorSubject"],
+                        tutorBio: arguments["tutorBio"],
+                        id: arguments["tutorID"],
+                        tutorLevel: arguments["tutorLevel"],
+                        tutorSessionIDs: arguments["tutorSessionsIDs"],
+                        bookTutorButton: false,
+                      ),
+                      SizedBox(
+                        height: ScreenSize.vertical! * 5,
+                      ),
 
-              // Calendar
-            ],
+                      StreamBuilder(
+                        stream: sessionsData.snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final tutorSession = snapshot.data!.docs;
+
+                            // if (arguments["tutorSessionsIDs"][0]
+                            //     .toString()
+                            //     .isNotEmpty) {
+                            //   print(arguments["tutorSessionsIDs"].length);
+                            //   print(arguments["tutorSessionsIDs"][0]);
+                            //   print(arguments["tutorSessionsIDs"][1]);
+                            //   print(tutorSession[0].id);
+                            //   print(tutorSession[1].id);
+                            // }
+                            print(arguments["tutorSessionsIDs"]);
+                            for (int i = 0; i < tutorSession.length; i++) {
+                              if (arguments["tutorSessionsIDs"][0].toString() ==
+                                  tutorSession[i].id.toString()) {
+                                DateTime tempDateTime =
+                                    DateTime.parse(tutorSession[i]["dateTime"]);
+                                print(tutorSession[i]["participants"]);
+                                print(tutorSession[i]["maxParticipants"]);
+                                print(tutorSession[i].id);
+
+                                print(tutorSession[i].id);
+                                bookedSessions[tempDateTime] = [
+                                  Session(
+                                      id: tutorSession[i].id,
+                                      dateTime: tempDateTime,
+                                      maxParticipants: tutorSession[i]
+                                          ["maxParticipants"],
+                                      participants: tutorSession[i]
+                                          ["participants"])
+                                ];
+                              }
+                            }
+                            print(tutorSession[0]["participants"][0]);
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(ScreenSize.horizontal! * 3),
+                                child: TableCalendar(
+                                  availableGestures: AvailableGestures.none,
+                                  focusedDay: DateTime.now(),
+                                  firstDay: DateTime.utc(2023, 3, 1),
+                                  lastDay: DateTime.utc(2024, 3, 1),
+                                  headerStyle: HeaderStyle(
+                                      formatButtonVisible: false,
+                                      titleCentered: true),
+                                  onDaySelected: (selectedDay, focusedDay) {
+                                    setState(() {
+                                      selectDay = selectedDay;
+                                    });
+                                  },
+                                  eventLoader: _getSessionsfromDay,
+                                ),
+                              ),
+                            );
+                          } else {
+                            return SpinKitRing(
+                              color: Color(0xff9F9DF3),
+                              size: ScreenSize.vertical! * 10,
+                            );
+                          }
+                        },
+                      ),
+
+                      SizedBox(
+                        height: ScreenSize.vertical! * 3,
+                      ),
+                      ..._getSessionsfromDay(selectDay).map(
+                        (Session session) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                          ),
+                          margin: EdgeInsets.fromLTRB(
+                              0, 0, 0, ScreenSize.vertical! * 2),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(session.id),
+                                trailing: Text(selectDay.toString()),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: ScreenSize.vertical! * 3,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

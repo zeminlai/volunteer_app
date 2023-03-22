@@ -113,6 +113,7 @@ class FindTutorCard extends StatefulWidget {
   final String id;
   final String tutorLevel;
   final bool bookTutorButton;
+  final List tutorSessionIDs;
   const FindTutorCard({
     super.key,
     required this.tutorName,
@@ -124,6 +125,7 @@ class FindTutorCard extends StatefulWidget {
     required this.id,
     required this.tutorLevel,
     required this.bookTutorButton,
+    required this.tutorSessionIDs,
   });
 
   @override
@@ -266,6 +268,7 @@ class _FindTutorCardState extends State<FindTutorCard> {
                                     "tutorBio": widget.tutorBio,
                                     "tutorID": widget.id,
                                     "tutorLevel": widget.tutorLevel,
+                                    "tutorSessionsIDs": widget.tutorSessionIDs,
                                   });
                             },
                             child: Text(
