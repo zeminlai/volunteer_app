@@ -32,9 +32,11 @@ class _PopUpBookingCardState extends State<PopUpBookingCard> {
 }
 
 class AvailableSessionCard extends StatefulWidget {
+  final String tutorName;
   final Session session;
   final DateTime selectDay;
-  const AvailableSessionCard({super.key, required this.session, required this.selectDay});
+  const AvailableSessionCard(
+      {super.key, required this.session, required this.selectDay, required this.tutorName});
 
   @override
   State<AvailableSessionCard> createState() => AvailableSessionCardState();
@@ -43,6 +45,8 @@ class AvailableSessionCard extends StatefulWidget {
 class AvailableSessionCardState extends State<AvailableSessionCard> {
   @override
   Widget build(BuildContext context) {
+    final timeStart = DateFormat("h:mma").format(widget.session.timeStart);
+    final timeEnd = DateFormat("h:mma").format(widget.session.timeEnd);
     ScreenSize().init(context);
     return Container(
       decoration: BoxDecoration(
@@ -53,8 +57,12 @@ class AvailableSessionCardState extends State<AvailableSessionCard> {
       child: Column(
         children: [
           ListTile(
-            title: Text(widget.session.title),
-            trailing: Text(widget.selectDay.toString()),
+            title: Text(
+              widget.session.title,
+              style: TextStyle(fontSize: ScreenSize.horizontal! * 4.3),
+            ),
+            subtitle: Text("by ${widget.tutorName}"),
+            trailing: Text("${timeStart} - ${timeEnd}"),
           ),
         ],
       ),

@@ -180,7 +180,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
                                     });
                                   },
                                   eventLoader: _getSessionsfromDay,
-                                  calendarStyle: CalendarStyle(
+                                  calendarStyle: const CalendarStyle(
                                     selectedDecoration: BoxDecoration(
                                       color: Color(0xff5FC88F),
                                       shape: BoxShape.circle,
@@ -203,7 +203,17 @@ class _BookSessionPageState extends State<BookSessionPage> {
                       ),
 
                       SizedBox(
-                        height: ScreenSize.vertical! * 3,
+                        height: ScreenSize.vertical! * 5,
+                      ),
+                      Text(
+                        "Available Sessions",
+                        style: TextStyle(
+                          fontSize: ScreenSize.horizontal! * 5,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(
+                        height: ScreenSize.vertical! * 2,
                       ),
                       ..._getSessionsfromDay(selectDay).map(
                         (Session session) => GestureDetector(
@@ -211,7 +221,11 @@ class _BookSessionPageState extends State<BookSessionPage> {
                             context: context,
                             builder: (context) => PopUpBookingCard(session: session),
                           ),
-                          child: AvailableSessionCard(session: session, selectDay: selectDay),
+                          child: AvailableSessionCard(
+                            session: session,
+                            selectDay: selectDay,
+                            tutorName: arguments["tutorName"],
+                          ),
                         ),
                       ),
                       SizedBox(
