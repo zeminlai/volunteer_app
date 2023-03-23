@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:volunteer_app/utils/book_session_components.dart';
 import '../utils/size_config.dart';
 import '../utils/find_tutor_components.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -19,6 +20,11 @@ class _BookSessionPageState extends State<BookSessionPage> {
   }
 
   DateTime selectDay = DateTime.now();
+
+  bool checkDuplicateSessions(DateTime tempDateTime, String tutorSessionID) {
+    return bookedSessions[tempDateTime]!.any((session) => session.id == tutorSessionID);
+  }
+
   @override
   Widget build(BuildContext context) {
     final sessionsData = FirebaseFirestore.instance.collection('sessions');
@@ -26,15 +32,16 @@ class _BookSessionPageState extends State<BookSessionPage> {
     ScreenSize().init(context);
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/book_session_bg.png'),
-              fit: BoxFit.cover,
-            ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/book_session_bg.png'),
+            fit: BoxFit.cover,
           ),
+        ),
+        child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,13 +51,11 @@ class _BookSessionPageState extends State<BookSessionPage> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon:
-                      Icon(Icons.arrow_back, size: ScreenSize.horizontal! * 8),
+                  icon: Icon(Icons.arrow_back, size: ScreenSize.horizontal! * 8),
                 ),
 
                 Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: ScreenSize.horizontal! * 5),
+                  margin: EdgeInsets.symmetric(horizontal: ScreenSize.horizontal! * 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -112,61 +117,79 @@ class _BookSessionPageState extends State<BookSessionPage> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             final tutorSession = snapshot.data!.docs;
+                            for (int i = 0; i < arguments["tutorSessionsIDs"].length; i++) {
+                              arguments["tutorSessionsIDs"][i] =
+                                  arguments["tutorSessionsIDs"][i].toString().trim();
 
-                            // if (arguments["tutorSessionsIDs"][0]
-                            //     .toString()
-                            //     .isNotEmpty) {
-                            //   print(arguments["tutorSessionsIDs"].length);
-                            //   print(arguments["tutorSessionsIDs"][0]);
-                            //   print(arguments["tutorSessionsIDs"][1]);
-                            //   print(tutorSession[0].id);
-                            //   print(tutorSession[1].id);
-                            // }
-                            print(arguments["tutorSessionsIDs"]);
-                            for (int i = 0; i < tutorSession.length; i++) {
-                              if (arguments["tutorSessionsIDs"][0].toString() ==
-                                  tutorSession[i].id.toString()) {
-                                DateTime tempDateTime =
-                                    DateTime.parse(tutorSession[i]["dateTime"]);
-                                print(tutorSession[i]["participants"]);
-                                print(tutorSession[i]["maxParticipants"]);
-                                print(tutorSession[i].id);
+                              for (int k = 0; k < tutorSession.length; k++) {
+                                if (arguments["tutorSessionsIDs"][i] == tutorSession[k].id) {
+                                  DateTime tempDateTime =
+                                      DateTime.parse(tutorSession[k]["dateTime"]);
+                                  DateTime timeStart = DateTime.parse(tutorSession[k]["timeStart"]);
+                                  DateTime timeEnd = DateTime.parse(tutorSession[k]["timeEnd"]);
 
-                                print(tutorSession[i].id);
-                                bookedSessions[tempDateTime] = [
-                                  Session(
-                                      id: tutorSession[i].id,
-                                      dateTime: tempDateTime,
-                                      maxParticipants: tutorSession[i]
-                                          ["maxParticipants"],
-                                      participants: tutorSession[i]
-                                          ["participants"])
-                                ];
+                                  if (bookedSessions[tempDateTime] != null &&
+                                      !checkDuplicateSessions(tempDateTime, tutorSession[k].id)) {
+                                    bookedSessions[tempDateTime]!.add(
+                                      Session(
+                                        id: tutorSession[k].id,
+                                        dateTime: tempDateTime,
+                                        maxParticipants: tutorSession[k]["maxParticipants"],
+                                        participants: tutorSession[k]["participants"],
+                                        title: tutorSession[k]["title"],
+                                        timeStart: timeStart,
+                                        timeEnd: timeEnd,
+                                      ),
+                                    );
+                                  } else if (bookedSessions[tempDateTime] == null) {
+                                    bookedSessions[tempDateTime] = [
+                                      Session(
+                                        id: tutorSession[k].id,
+                                        dateTime: tempDateTime,
+                                        maxParticipants: tutorSession[k]["maxParticipants"],
+                                        participants: tutorSession[k]["participants"],
+                                        title: tutorSession[k]["title"],
+                                        timeStart: timeStart,
+                                        timeEnd: timeEnd,
+                                      )
+                                    ];
+                                  }
+                                }
                               }
                             }
-                            print(tutorSession[0]["participants"][0]);
+                            print("bookedSessions length : ${bookedSessions.length}");
+
                             return Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
                                 color: Colors.white,
                               ),
                               child: Padding(
-                                padding:
-                                    EdgeInsets.all(ScreenSize.horizontal! * 3),
+                                padding: EdgeInsets.all(ScreenSize.horizontal! * 3),
                                 child: TableCalendar(
                                   availableGestures: AvailableGestures.none,
                                   focusedDay: DateTime.now(),
                                   firstDay: DateTime.utc(2023, 3, 1),
                                   lastDay: DateTime.utc(2024, 3, 1),
-                                  headerStyle: HeaderStyle(
-                                      formatButtonVisible: false,
-                                      titleCentered: true),
+                                  headerStyle: const HeaderStyle(
+                                      formatButtonVisible: false, titleCentered: true),
+                                  selectedDayPredicate: (day) => isSameDay(day, selectDay),
                                   onDaySelected: (selectedDay, focusedDay) {
                                     setState(() {
                                       selectDay = selectedDay;
                                     });
                                   },
                                   eventLoader: _getSessionsfromDay,
+                                  calendarStyle: CalendarStyle(
+                                    selectedDecoration: BoxDecoration(
+                                      color: Color(0xff5FC88F),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    todayDecoration: BoxDecoration(
+                                      color: Color(0xff9F9DF3),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
                                 ),
                               ),
                             );
@@ -183,21 +206,12 @@ class _BookSessionPageState extends State<BookSessionPage> {
                         height: ScreenSize.vertical! * 3,
                       ),
                       ..._getSessionsfromDay(selectDay).map(
-                        (Session session) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
+                        (Session session) => GestureDetector(
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) => PopUpBookingCard(session: session),
                           ),
-                          margin: EdgeInsets.fromLTRB(
-                              0, 0, 0, ScreenSize.vertical! * 2),
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: Text(session.id),
-                                trailing: Text(selectDay.toString()),
-                              ),
-                            ],
-                          ),
+                          child: AvailableSessionCard(session: session, selectDay: selectDay),
                         ),
                       ),
                       SizedBox(
