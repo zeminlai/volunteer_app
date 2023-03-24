@@ -30,6 +30,17 @@ class _BookSessionPageState extends State<BookSessionPage> {
     final sessionsData = FirebaseFirestore.instance.collection('sessions');
     final arguments = ModalRoute.of(context)!.settings.arguments as Map;
     ScreenSize().init(context);
+    Future<void> showDialogAndRebuild(Session session) async {
+      await showDialog(
+        context: context,
+        builder: (context) => PopUpBookingCard(
+          session: session,
+          tutorRules: arguments["tutorRules"],
+          tutorImage: arguments["tutorImage"],
+          tutorName: arguments["tutorName"],
+        ),
+      ).then((context) => setState(() {}));
+    }
 
     return Scaffold(
       body: Container(
@@ -107,6 +118,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
                         tutorLevel: arguments["tutorLevel"],
                         tutorSessionIDs: arguments["tutorSessionsIDs"],
                         bookTutorButton: false,
+                        tutorRules: arguments["tutorRules"],
                       ),
                       SizedBox(
                         height: ScreenSize.vertical! * 5,
@@ -154,6 +166,8 @@ class _BookSessionPageState extends State<BookSessionPage> {
                                       )
                                     ];
                                   }
+                                  print(
+                                      "${tutorSession[k].id} : ${tutorSession[k]["participants"].length}");
                                 }
                               }
                             }
@@ -217,10 +231,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
                       ),
                       ..._getSessionsfromDay(selectDay).map(
                         (Session session) => GestureDetector(
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (context) => PopUpBookingCard(session: session),
-                          ),
+                          onTap: () => showDialogAndRebuild(session),
                           child: AvailableSessionCard(
                             session: session,
                             selectDay: selectDay,

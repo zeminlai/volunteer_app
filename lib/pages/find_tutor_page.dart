@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:volunteer_app/resources/tutor_model.dart';
 import 'package:volunteer_app/utils/find_tutor_components.dart';
 import 'package:volunteer_app/utils/size_config.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class FindTutorPage extends StatefulWidget {
   const FindTutorPage({super.key});
@@ -56,8 +57,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                     Text(
                       "Find a tutor",
                       style: TextStyle(
-                          fontSize: ScreenSize.vertical! * 4,
-                          fontWeight: FontWeight.w600),
+                          fontSize: ScreenSize.vertical! * 4, fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: ScreenSize.vertical! * 2,
@@ -87,8 +87,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                 decoration: const BoxDecoration(
                     color: Color.fromARGB(155, 255, 255, 255),
                     borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(40),
-                        topLeft: Radius.circular(40))),
+                        topRight: Radius.circular(40), topLeft: Radius.circular(40))),
                 child: Column(
                   children: [
                     //Subjects
@@ -122,7 +121,11 @@ class _FindTutorPageState extends State<FindTutorPage> {
                             },
                           );
                         } else {
-                          return const Text("error when getting subject data");
+                          return SpinKitRing(
+                            color: Color(0xff9F9DF3),
+                            size: ScreenSize.vertical! * 10,
+                          );
+                          ;
                         }
                       },
                     ),
@@ -163,6 +166,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                     id: currentTutor.id,
                                     tutorLevel: dropdownValue,
                                     tutorSessionIDs: currentTutor["sessions"],
+                                    tutorRules: currentTutor["rules"],
                                     bookTutorButton: true,
                                   );
                                 },
@@ -172,7 +176,10 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                 itemCount: filteredTutors.length),
                           );
                         } else {
-                          return const Text("Error getting tutor data");
+                          return SpinKitRing(
+                            color: Color(0xff9F9DF3),
+                            size: ScreenSize.vertical! * 10,
+                          );
                         }
                       },
                     )

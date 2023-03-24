@@ -10,10 +10,7 @@ class LevelDropdown extends StatefulWidget {
   final Function(String) onLevelChanged;
 
   LevelDropdown(
-      {super.key,
-      required this.level,
-      required this.dropdownValue,
-      required this.onLevelChanged});
+      {super.key, required this.level, required this.dropdownValue, required this.onLevelChanged});
 
   @override
   State<LevelDropdown> createState() => Level_DropdownState();
@@ -26,13 +23,11 @@ class Level_DropdownState extends State<LevelDropdown> {
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-                color: Color.fromARGB(155, 255, 255, 255), width: 2),
+            borderSide: const BorderSide(color: Color.fromARGB(155, 255, 255, 255), width: 2),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-                color: Color.fromARGB(1, 255, 255, 255), width: 2),
+            borderSide: const BorderSide(color: Color.fromARGB(1, 255, 255, 255), width: 2),
           ),
           filled: true,
           fillColor: const Color.fromARGB(155, 255, 255, 255),
@@ -63,10 +58,7 @@ class SubjectSelection extends StatelessWidget {
   final String subjectSelected;
   final Function(String) onChanged;
   SubjectSelection(
-      {super.key,
-      required this.subjects,
-      required this.subjectSelected,
-      required this.onChanged});
+      {super.key, required this.subjects, required this.subjectSelected, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -85,15 +77,11 @@ class SubjectSelection extends StatelessWidget {
               child: (subjectSelected == value)
                   ? Text(
                       value,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: ScreenSize.vertical! * 2),
+                      style: TextStyle(color: Colors.black, fontSize: ScreenSize.vertical! * 2),
                     )
                   : Text(
                       value,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: ScreenSize.vertical! * 2),
+                      style: TextStyle(color: Colors.grey, fontSize: ScreenSize.vertical! * 2),
                     ),
             );
           },
@@ -114,6 +102,7 @@ class FindTutorCard extends StatefulWidget {
   final String tutorLevel;
   final bool bookTutorButton;
   final List tutorSessionIDs;
+  final String tutorRules;
   const FindTutorCard({
     super.key,
     required this.tutorName,
@@ -126,6 +115,7 @@ class FindTutorCard extends StatefulWidget {
     required this.tutorLevel,
     required this.bookTutorButton,
     required this.tutorSessionIDs,
+    required this.tutorRules,
   });
 
   @override
@@ -164,8 +154,7 @@ class _FindTutorCardState extends State<FindTutorCard> {
 
                       Expanded(
                         child: Container(
-                          margin:
-                              EdgeInsets.only(left: ScreenSize.horizontal! * 5),
+                          margin: EdgeInsets.only(left: ScreenSize.horizontal! * 5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -189,8 +178,7 @@ class _FindTutorCardState extends State<FindTutorCard> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 140, 211, 128),
+                                    color: const Color.fromARGB(255, 140, 211, 128),
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(3),
@@ -258,18 +246,18 @@ class _FindTutorCardState extends State<FindTutorCard> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/book_session',
-                                  arguments: {
-                                    "tutorName": widget.tutorName,
-                                    "tutorUni": widget.tutorUni,
-                                    "tutorStars": widget.tutorStars,
-                                    "tutorImage": widget.tutorImage,
-                                    "tutorSubject": widget.tutorSubject,
-                                    "tutorBio": widget.tutorBio,
-                                    "tutorID": widget.id,
-                                    "tutorLevel": widget.tutorLevel,
-                                    "tutorSessionsIDs": widget.tutorSessionIDs,
-                                  });
+                              Navigator.pushNamed(context, '/book_session', arguments: {
+                                "tutorName": widget.tutorName,
+                                "tutorUni": widget.tutorUni,
+                                "tutorStars": widget.tutorStars,
+                                "tutorImage": widget.tutorImage,
+                                "tutorSubject": widget.tutorSubject,
+                                "tutorBio": widget.tutorBio,
+                                "tutorID": widget.id,
+                                "tutorLevel": widget.tutorLevel,
+                                "tutorSessionsIDs": widget.tutorSessionIDs,
+                                "tutorRules": widget.tutorRules,
+                              });
                             },
                             child: Text(
                               "BOOK TUTOR",
