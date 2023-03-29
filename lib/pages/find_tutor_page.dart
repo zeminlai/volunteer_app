@@ -150,6 +150,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                         if (snapshot.hasData) {
                           return Expanded(
                             child: ListView.separated(
+                                physics: BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   // Loop through filteredTutors List
                                   final currentTutor = filteredTutors[index];

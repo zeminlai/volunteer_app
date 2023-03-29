@@ -25,6 +25,15 @@ class _BookSessionPageState extends State<BookSessionPage> {
     return bookedSessions[tempDateTime]!.any((session) => session.id == tutorSessionID);
   }
 
+  bool alreadyBooked(List DBparticipants, List<Session> bookedSessionsList) {
+    for (int i = 0; i < bookedSessionsList.length; i++) {
+      if (DBparticipants.contains(bookedSessionsList[i].participants)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final sessionsData = FirebaseFirestore.instance.collection('sessions');
@@ -53,6 +62,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
           ),
         ),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,6 +175,10 @@ class _BookSessionPageState extends State<BookSessionPage> {
                                         timeEnd: timeEnd,
                                       )
                                     ];
+                                  } else if (bookedSessions[tempDateTime] != null &&
+                                      alreadyBooked(tutorSession[k]["participants"],
+                                          bookedSessions[tempDateTime]!)) {
+                                    print("${tempDateTime} : already boooked");
                                   }
                                   print(
                                       "${tutorSession[k].id} : ${tutorSession[k]["participants"].length}");

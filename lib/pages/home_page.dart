@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -57,13 +58,12 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             "Top tutors of the week",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
+                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
                           ),
                         ),
                         Container(
                           child: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: [
@@ -124,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                     width: ScreenSize.horizontal! * 100,
                     height: ScreenSize.vertical! * 20,
                     child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       child: Row(children: [
                         UpcomingCard(
@@ -174,8 +175,7 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(height: 15),
                         Text(
                           "Top Resources This Week",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                         ),
                         SizedBox(height: 15),
                         ResourcesCard(

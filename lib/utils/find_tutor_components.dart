@@ -67,6 +67,7 @@ class SubjectSelection extends StatelessWidget {
       width: ScreenSize.horizontal! * 100,
       height: ScreenSize.vertical! * 5,
       child: ListView(
+        physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: subjects.map(
           (value) {
